@@ -1,0 +1,39 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "a2719114ce8ef26de8fe3f65469f65a20dd1a9516b3de44b756cf9684e4504ab"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.7"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "neo4j": {
+            "hashes": [
+                "sha256:82166c1cdebaa3ab174ff7ad608289293856a8847b4d90de13932c06cee8e030"
+            ],
+            "index": "pypi",
+            "version": "==4.0.0"
+        },
+        "pytz": {
+            "hashes": [
+                "sha256:a494d53b6d39c3c6e44c3bec237336e14305e4f29bbf800b599253057fbb79ed",
+                "sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"
+            ],
+            "version": "==2020.1"
+        },
+        "twint": {
+            "git": "https://github.com/twintproject/twint.git",
+            "ref": "44273dd9c69cd5d5f2754b8e1d725f4ffa62311a"
+        }
+    },
+    "develop": {}
+}

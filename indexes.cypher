@@ -1,0 +1,5 @@
+CREATE CONSTRAINT tweet_id ON (t:Tweet) ASSERT t.id IS UNIQUE;
+CREATE CONSTRAINT user_name ON (u:User) ASSERT u.username IS UNIQUE;
+CREATE CONSTRAINT conversation_id ON (c:Conversation) ASSERT c.id IS UNIQUE;
+CREATE CONSTRAINT hashtag ON (h:Hashtag) ASSERT h.name IS UNIQUE;
+CREATE CONSTRAINT url ON (u:URL) ASSERT u.url IS UNIQUE;
