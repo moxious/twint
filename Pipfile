@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 twint = {git = "https://github.com/twintproject/twint.git"}
 neo4j = "*"
+google-cloud-storage = "*"
 
 [requires]
 python_version = "3.7"
