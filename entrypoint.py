@@ -2,7 +2,7 @@ import sys
 import twint
 import json
 import os
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone, timedelta
 from google.cloud import storage
 import tempfile
 
@@ -39,6 +39,11 @@ def get_filename(args, suffix=''):
 
     return base_directory + '/' + dataset + '/' + day_directory + '/' + ','.join(parts) + suffix + '.json'
 
+def one_month_ago():
+    today = date.today()
+    lastMonth = today - timedelta(days=31)
+    return lastMonth.strftime("%Y-%m-%d 00:00:00")
+
 def get_twint_config(args):
     """Takes a dict of user-supplied overrides, and creates a twint config
     based on that"""
@@ -54,7 +59,7 @@ def get_twint_config(args):
     options.Lang = args.get('Lang') or options.Lang
     options.Translate = args.get('Translate') or options.Translate
     options.TranslateDest = args.get('TranslateDest') or options.TranslateDest
-    options.Since = args.get('Since') or options.Since
+    options.Since = args.get('Since') or one_month_ago()
 
     # Fixed config that can't be overridden.
     options.Store_json = True
