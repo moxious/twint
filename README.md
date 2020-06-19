@@ -15,6 +15,18 @@ export NEO4J_PASSWORD=admin
 pipenv run python3 import-tweets username.json
 ```
 
+## Docker
+
+```
+docker build . -t twint:latest
+
+export CONFIG='{"Username":"realDonaldTrump","Limit":10,"Bucket":"meetup-data"}'
+
+export KEY=`cat /path/to/service-key.json`
+
+docker run -e KEY -e CONFIG twint:latest 
+```
+
 ## Twint Documentation
 
 See [twint usage examples](https://github.com/twintproject/twint#cli-basic-examples-and-combos)
