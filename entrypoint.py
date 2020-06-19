@@ -34,9 +34,10 @@ def get_filename(args, suffix=''):
         parts.append("%s=%s" % (key, copy[key]))
     
     base_directory = args.get("BaseDirectory") or 'twint'
+    dataset = args.get('DataSet') or 'default'
     day_directory = datetime.utcnow().strftime("%Y-%m-%d")
 
-    return base_directory + '/' + day_directory + '/' + ','.join(parts) + suffix + '.json'
+    return base_directory + '/' + dataset + '/' + day_directory + '/' + ','.join(parts) + suffix + '.json'
 
 def get_twint_config(args):
     """Takes a dict of user-supplied overrides, and creates a twint config
