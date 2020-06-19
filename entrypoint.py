@@ -4,9 +4,24 @@ import json
 import os
 from datetime import datetime, timezone
 from google.cloud import storage
+import tempfile
+
+def setup_google():
+    if not os.environ.get("KEY", None):
+        raise Exception("You must define a KEY environment variable with service key JSON")
+    
+    temp = tempfile.NamedTemporaryFile(suffix='.json', delete=False)
+    temp.write(bytearray(os.environ.get("KEY"), 'utf-8'))
+    print(os.environ.get("KEY"))
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp.name
+    temp.close()
+    print("Credentials staged to %s" % temp.name)
+    return temp.name
 
 REQUIRED_CONFIG = ['Bucket']
+creds = setup_google()
 storage_client = storage.Client()
+os.unlink(creds)
 
 def get_filename(args, suffix=''):
     copy = args.copy()
@@ -18,9 +33,10 @@ def get_filename(args, suffix=''):
     for key in copy.keys():
         parts.append("%s=%s" % (key, copy[key]))
     
+    base_directory = args.get("BaseDirectory") or 'twint'
     day_directory = datetime.utcnow().strftime("%Y-%m-%d")
 
-    return day_directory + '/' + ','.join(parts) + suffix + '.json'
+    return base_directory + '/' + day_directory + '/' + ','.join(parts) + suffix + '.json'
 
 def get_twint_config(args):
     """Takes a dict of user-supplied overrides, and creates a twint config
@@ -31,7 +47,7 @@ def get_twint_config(args):
     # Default config is overridden with anything the user specified.
     # This can't be written as a subscripted loop because of how the twint Config
     # obj is written.
-    options.Username = args.get('Username') or options.Username
+    options.Username = args.get('Username') or args.get('User') or options.Username
     options.Limit = args.get('Limit') or options.Limit
     options.Search = args.get('Search') or options.Search
     options.Lang = args.get('Lang') or options.Lang
@@ -86,7 +102,7 @@ def main(argv):
         raise Exception("Target recent-enough files already exist.  Not repeating")
 
     args['Start'] = datetime.utcnow().replace(tzinfo=timezone.utc).isoformat()
-
+    print(args)
     options = get_twint_config(args)
 
     try:
