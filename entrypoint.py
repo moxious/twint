@@ -112,6 +112,13 @@ def main(argv):
     options = get_twint_config(args)
 
     try:
+        fp = open (options.Output, 'w')
+        fp.truncate(0)
+        fp.close()
+    except Exception as err:
+        print("Failed to truncate: %s" % err)
+
+    try:
         twint.run.Search(options)
     except Exception as err:
         args.Error = "%s" % err
